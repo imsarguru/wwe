@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Etransfer {
+    event Received(address from, uint amount);
+
+    receive() external payable {
+        emit Received(msg.sender, msg.value);
+    }
+
+    fallback() external payable {
+        emit Received(msg.sender, msg.value);
+    }
+
+    function getBalance() public view returns (uint) {
+        return address(this).balance;
+    }
+}
+
+contract Sender {
+    event Deposited(address from, uint amount);
+    event Sent(address to, uint ethAmount);
+
+    function deposit() public payable {
+        emit Deposited(msg.sender, msg.value);
+    }
+
+    function transferEtherInEth(address payable _receiver, uint _ethAmount) public {
+        require(_receiver != address(0), "Invalid receiver");
+
+        uint amountWei = _ethAmount * 1 ether; 
+        require(address(this).balance >= amountWei, "Sender contract low balance");
+
+        (bool sent, ) = _receiver.call{value: amountWei}("");
+        require(sent, "Transaction Failed");
+
+        emit Sent(_receiver, _ethAmount);
+    }
+
+    function getBalance() public view returns (uint) {
+        return address(this).balance;
+    }
+}

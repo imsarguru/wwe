@@ -1,0 +1,56 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MemberRewards {
+
+    address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    struct Member {
+        string name;
+        uint points;
+        bool exists;
+    }
+
+    mapping(address => Member) public members;
+
+    event MemberAdded(address memberAddress, string name);
+    event PointsAdded(address memberAddress, uint points);
+    event PointsRedeemed(address memberAddress, uint points);
+
+    function addMember(address memberAddress, string memory name) public {
+        require(msg.sender == owner, "Only owner can add members");
+        require(!members[memberAddress].exists, "Member already exists");
+
+        members[memberAddress] = Member(name, 0, true);
+
+        emit MemberAdded(memberAddress, name);
+    }
+
+    function addPoints(address memberAddress, uint points) public {
+        require(msg.sender == owner, "Only owner can add points");
+        require(members[memberAddress].exists, "Member does not exist");
+
+        members[memberAddress].points += points;
+
+        emit PointsAdded(memberAddress, points);
+    }
+
+    function redeemPoints(address memberAddress, uint points) public returns(bool) {
+        require(members[memberAddress].exists, "Member does not exist");
+        require(members[memberAddress].points >= points, "Not enough points");
+
+        members[memberAddress].points -= points;
+
+        emit PointsRedeemed(memberAddress, points);
+        return true;
+    }
+
+    function getMemberPoints(address memberAddress) public view returns(uint) {
+        require(members[memberAddress].exists, "Member does not exist");
+        return members[memberAddress].points;
+    }
+}

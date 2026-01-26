@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract FitnessClubRewards {
+
+   
+    mapping(address => uint256) private rewardPoints;
+
+    event RewardsAdded(address member, uint256 points);
+
+    function addRewards(address _member, uint256 _points) public {
+        require(_member != address(0), "Invalid member address");
+        rewardPoints[_member] += _points;
+        emit RewardsAdded(_member, _points);
+    }
+
+    function getRewards(address _member) public view returns (uint256) {
+        return rewardPoints[_member];
+    }
+}
