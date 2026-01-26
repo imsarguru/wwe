@@ -1,0 +1,320 @@
+-------------------------1 Practical -----------------------------------
+# System Update (Linux / Cloud)
+sudo apt update
+
+# Docker Installation & Verification
+docker --version
+docker info
+docker images
+docker ps
+docker pull hello-world
+docker run hello-world
+
+# Node.js & NPM Verification
+node -v
+npm -v
+npm init -y
+npm install web3
+
+# Java (JDK) Verification
+java -version
+javac -version
+
+# Git Verification
+git --version
+
+# Hyperledger Fabric Installation
+git clone https://github.com/hyperledger/fabric-samples.git
+cd fabric-samples
+./bootstrap.sh
+
+# Start Hyperledger Fabric Test Network
+cd test-network
+./network.sh up
+docker ps
+
+# Stop Fabric Network
+./network.sh down
+
+# Ethereum & Solidity Setup (Truffle)
+npm install -g truffle
+truffle version
+truffle init
+truffle compile
+
+# Ganache Verification
+ganache --version
+--------------------------------------------------------------------
+----------Practical 2--------------------------------
+# Prerequisites Check
+docker --version
+docker-compose --version
+java -version
+javac -version
+node -v
+git --version
+
+# Clone Hyperledger Fabric Samples
+git clone https://github.com/hyperledger/fabric-samples.git
+cd fabric-samples
+
+# Download Fabric Binaries and Docker Images
+./bootstrap.sh
+
+# Go to Test Network
+cd test-network
+
+# Bring up Fabric Network
+./network.sh up createChannel -c mychannel -ca
+
+# Check Running Containers
+docker ps
+
+# Set Environment Variables for Org1
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=$PWD/../config/
+
+# Deploy Chaincode (Optional but Good for Exam)
+./network.sh deployCC -c mychannel -ccn basic -ccp ../asset-transfer-basic/chaincode-java -ccl java
+
+# Move to Java Chaincode Directory
+cd ../asset-transfer-basic/chaincode-java
+
+# Build Java Chaincode
+./gradlew build
+
+# Stop the Network
+cd ../../test-network
+./network.sh down
+-------------------------------------------------------------------------------
+-------------------------Practical 3---------------------
+# Go to Fabric test network
+cd fabric-samples/test-network
+
+# Start the network and create channel
+./network.sh up createChannel -c mychannel -ca
+
+# Deploy Java chaincode
+./network.sh deployCC -c mychannel -ccn basic -ccp ../asset-transfer-basic/chaincode-java -ccl java
+
+# Set environment variables
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=$PWD/../config/
+
+# Go to Java application directory
+cd ../asset-transfer-basic/application-java
+
+# Build Java client application
+./gradlew build
+
+# Run Java application (Interact with blockchain)
+./gradlew run
+
+# End connection
+cd ../../test-network
+./network.sh down
+-------------------------------------------------------------------
+-------------------Practical 4---------------------------
+# Go to Fabric samples
+cd fabric-samples/test-network
+
+# Start Fabric network and create channel
+./network.sh up createChannel -c mychannel -ca
+
+# Deploy Asset Transfer Java Chaincode
+./network.sh deployCC -c mychannel -ccn basic \
+-ccp ../asset-transfer-basic/chaincode-java \
+-ccl java
+
+# Set Fabric environment variables
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=$PWD/../config/
+
+# Go to Asset Transfer Java Application
+cd ../asset-transfer-basic/application-java
+
+# Build the application
+./gradlew build
+
+# Run Asset Transfer App
+./gradlew run
+
+# End connection
+cd ../../test-network
+./network.sh down
+---------------------------------------------------------------------
+-------------------Practical 5 --------------------------------
+# Go to Fabric test network
+cd fabric-samples/test-network
+
+# Start blockchain network and channel
+./network.sh up createChannel -c fitnesschannel -ca
+
+# Deploy reward tracking chaincode (asset-based)
+./network.sh deployCC -c fitnesschannel -ccn reward \
+-ccp ../asset-transfer-basic/chaincode-java \
+-ccl java
+
+# Set environment variables
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=$PWD/../config/
+
+# Go to Java client application
+cd ../asset-transfer-basic/application-java
+
+# Build the application
+./gradlew build
+
+# Run the fitness reward tracking app
+./gradlew run
+
+# End connection
+cd ../../test-network
+./network.sh down
+--------------------------------------------------------------------------
+-----------------Practical 6------------------------------------------------
+# Prerequisites check
+node -v
+npm -v
+docker --version
+git --version
+
+# Clone Hyperledger Fabric samples
+git clone https://github.com/hyperledger/fabric-samples.git
+cd fabric-samples
+
+# Download Fabric binaries and images
+./bootstrap.sh
+
+# Start Fabric test network
+cd test-network
+./network.sh up createChannel -c carchannel -ca
+
+# Deploy sample chaincode (used as Car Auction logic)
+./network.sh deployCC -c carchannel -ccn carauction \
+-ccp ../asset-transfer-basic/chaincode-javascript \
+-ccl javascript
+
+# Set environment variables
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=$PWD/../config/
+
+# Go to Node.js application
+cd ../asset-transfer-basic/application-javascript
+
+# Install Node dependencies
+npm install
+
+# Run Node.js client app (Hello World interaction)
+node app.js
+
+# End connection
+cd ../../test-network
+./network.sh down
+-----------------------------------------------------------------
+--------------Practical 7----------------------------
+# Prerequisites check
+node -v
+npm -v
+docker --version
+git --version
+
+# Install Node-RED
+npm install -g --unsafe-perm node-red
+
+# Start Node-RED
+node-red
+
+# Clone Hyperledger Fabric samples
+git clone https://github.com/hyperledger/fabric-samples.git
+cd fabric-samples
+
+# Download Fabric binaries and docker images
+./bootstrap.sh
+
+# Start Fabric network for IoT tracking
+cd test-network
+./network.sh up createChannel -c iotchannel -ca
+
+# Deploy IoT asset tracking chaincode
+./network.sh deployCC -c iotchannel -ccn iotasset \
+-ccp ../asset-transfer-basic/chaincode-javascript \
+-ccl javascript
+
+# Set environment variables
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=$PWD/../config/
+
+# Go to Node.js client application
+cd ../asset-transfer-basic/application-javascript
+
+# Install dependencies
+npm install
+
+# Run IoT blockchain interaction app
+node app.js
+
+# Stop the Fabric network
+cd ../../test-network
+./network.sh down
+----------------------------------------------------
+------------------------Practical 8----------------------------------
+# ===== Common Prerequisites =====
+node -v
+npm -v
+docker --version
+git --version
+
+# Clone Fabric samples
+git clone https://github.com/hyperledger/fabric-samples.git
+cd fabric-samples
+
+# Download Fabric binaries and images
+./bootstrap.sh
+
+# Start Fabric test network
+cd test-network
+./network.sh up createChannel -c voteschannel -ca
+
+# Deploy voting chaincode (asset-based logic)
+./network.sh deployCC -c voteschannel -ccn voting \
+-ccp ../asset-transfer-basic/chaincode-javascript \
+-ccl javascript
+
+# Set environment variables
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=$PWD/../config/
+
+# Go to Node.js application
+cd ../asset-transfer-basic/application-javascript
+
+# Install dependencies
+npm install
+
+# Run voting application
+node app.js
+
+# Install Truffle framework
+npm install -g truffle
+
+# Initialize Ethereum project
+mkdir ethereum-voting
+cd ethereum-voting
+truffle init
+
+# Compile Solidity voting smart contract
+truffle compile
+# Start local Ethereum blockchain (Ganache)
+ganache
+# Deploy smart contract
+truffle migrate
+# Interact with voting contract
+truffle console
+addCandidate()
+vote()
+getVotes()
+getWinner()
+cd ../../test-network
+./network.sh down
+------------------
+
